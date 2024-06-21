@@ -1,7 +1,6 @@
 import {projects} from "/js/projects.js";
-import {waitForElementToDisplay} from "/js/common.js";
 
-waitForElementToDisplay("#dropdown_list", function() {populate_dropdown();}, 100, 500);
+window.onload = populate_dropdown();
 
 async function populate_dropdown() { 
     const dd = document.getElementById("dropdown_list");

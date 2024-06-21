@@ -1,7 +1,7 @@
 import {projects} from "/js/projects.js";
-import {get_desc, waitForElementToDisplay} from "/js/common.js";
+import {get_desc} from "/js/common.js";
 
-waitForElementToDisplay("#cards", function() {populate_cards();}, 100, 500);
+window.onload = populate_cards();
 
 async function populate_cards() {
     const cards = document.getElementById("cards");
