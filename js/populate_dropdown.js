@@ -9,7 +9,7 @@ async function populate_dropdown() {
     const li_all = document.createElement("li");
     const a_all = document.createElement("a");
     a_all.innerHTML = "View all";
-    a_all.href = "index.html";
+    a_all.href = "/";
     li_all.appendChild(a_all);
     dd.appendChild(li_all);
 
