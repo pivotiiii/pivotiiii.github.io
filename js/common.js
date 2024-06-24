@@ -1,8 +1,8 @@
-export async function get_api_value(url, key) {
+export async function get_api_value(url, key, max_age) {
     let cached_response = localStorage.getItem(url);
     if (cached_response) {
         let cached_obj = JSON.parse(cached_response);
-        if (parseInt(Date.now() - parseInt(cached_obj["date"])) < 480000) {
+        if (parseInt(Date.now() - parseInt(cached_obj["date"])) < max_age) {
             let cached_json = cached_obj["json"];
             return cached_json[key];
         }
