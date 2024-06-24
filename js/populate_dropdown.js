@@ -3,6 +3,11 @@ import {projects} from "/js/projects.js";
 window.addEventListener('load', function() {populate_dropdown()});
 
 async function populate_dropdown() { 
+    if (!document.getElementById("dropdown_list")) {
+        console.log("retrying dropdown populate")
+        setTimeout(populate_dropdown, 100);
+        return;
+    }
     const dd = document.getElementById("dropdown_list");
     dd.innerHTML = "";
     
