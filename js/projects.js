@@ -2,8 +2,7 @@ export const projects = new Array(
     {
         name: "Simultaneous Equation Cannons - Calculator", 
         shortname: "SEC Calculator", 
-        link: "https://pivotiiii.github.io/simultaneous_equation_cannon_calculator", 
-        is_external: false, 
+        link: "/simultaneous_equation_cannon_calculator", 
         description: "https://api.github.com/repos/pivotiiii/simultaneous_equation_cannon_calculator", 
         desc_external: true,
         desc_external_key: "description"
@@ -12,7 +11,6 @@ export const projects = new Array(
         name: "NSUI Banner Fixer", 
         shortname: "NSUI Banner Fixer", 
         link: "https://github.com/pivotiiii/nsui_banner_fixer", 
-        is_external: true, 
         description: "https://api.github.com/repos/pivotiiii/nsui_banner_fixer", 
         desc_external: true,
         desc_external_key: "description"
@@ -21,7 +19,6 @@ export const projects = new Array(
         name: "Game Mover", 
         shortname: "Game Mover", 
         link: "https://github.com/pivotiiii/game_mover", 
-        is_external: true, 
         description: "https://api.github.com/repos/pivotiiii/game_mover", 
         desc_external: true,
         desc_external_key: "description"
@@ -30,7 +27,6 @@ export const projects = new Array(
         name: "Wind Waker HD Playstation UI Mod", 
         shortname: "Wind Waker HD PS UI", 
         link: "https://gamebanana.com/mods/385841", 
-        is_external: true, 
         description: "https://gamebanana.com/apiv11/Mod/385841/ProfilePage", 
         desc_external: true,
         desc_external_key: "_sDescription"

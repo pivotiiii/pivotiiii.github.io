@@ -1,5 +1,5 @@
 import {projects} from "/js/projects.js";
-import {get_desc} from "/js/common.js";
+import {get_api_value} from "/js/common.js";
 
 window.onload = populate_cards();
 
@@ -15,21 +15,20 @@ async function populate_cards() {
 
         const desc = document.createElement("p");
         if (project.desc_external) {
-            desc.innerHTML = await get_desc(project.description, project.desc_external_key);
+            desc.innerHTML = await get_api_value(project.description, project.desc_external_key);
         } else {
             desc.innerHTML = project.description;
         }
-
         const button = document.createElement("a");
         button.href = project.link;
         button.style = "text-decoration: none;"
         const button_div = document.createElement("div");
         button_div.role = "button";
-        if (project.is_external) {
+        if (project.link.startsWith("http")) {
             let root_domain = project.link
                 .match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)[1]
                 .split('.').slice(-2).join('.');
-                button_div.innerHTML = "View on " + root_domain + "<i class='icon-link-ext' style='padding-left: 5px'></i> ";
+                button_div.innerHTML = "View on " + root_domain + ' <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><g fill="none" fill-rule="evenodd"><path d="M18 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5M15 3h6v6M10 14L20.2 3.8"/></g></svg>';
         } else {
             button_div.innerHTML = "Open";
         }
