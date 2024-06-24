@@ -14,11 +14,8 @@ async function populate_cards() {
         header.innerHTML = project.name;
 
         const desc = document.createElement("p");
-        if (project.desc_external) {
-            desc.innerHTML = await get_api_value(project.description, project.desc_external_key);
-        } else {
-            desc.innerHTML = project.description;
-        }
+        desc.id = project.name;
+        desc.ariaBusy = "true";
         const button = document.createElement("a");
         button.href = project.link;
         button.style = "text-decoration: none;"
@@ -39,6 +36,15 @@ async function populate_cards() {
         card.appendChild(button);
         cards.appendChild(card);
     }
-    cards.style.removeProperty("display");
+
+    for (let project of projects) {
+        const desc = document.getElementById(project.name);
+        if (project.desc_external) {
+            desc.innerHTML = await get_api_value(project.description, project.desc_external_key);
+        } else {
+            desc.innerHTML = project.description;
+        }
+        desc.ariaBusy = "false";
+    }
 
 }

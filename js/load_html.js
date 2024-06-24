@@ -13,7 +13,7 @@ for (const div of divs) {
         const script = document.createElement("script");
         script.type = "module";
         script.src = div.dataset.script;
-        //script.defer = true;
+        script.defer = true;
         div.parentNode.appendChild(script);
     }
 }
