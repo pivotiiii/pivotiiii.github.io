@@ -1,7 +1,7 @@
 import {projects} from "/js/projects.js";
 import {get_api_value} from "/js/common.js";
 
-window.onload = populate_cards();
+window.addEventListener('load', function() {populate_cards()});
 
 async function populate_cards() {
     const cards = document.getElementById("cards");
