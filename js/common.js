@@ -7,14 +7,10 @@ export async function get_api_value(url, key, max_age) {
             return cached_json[key];
         }
     }
-    return await fetch(url)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (response_json) {
-            console.log(`Fetching ${url}`);
-            let too_be_cached_response = {json: response_json, date: Date.now()};
-            localStorage.setItem(url, JSON.stringify(too_be_cached_response));
-            return response_json[key];
-        });
+    const response = await fetch(url);
+    const responseJson = await response.json();
+    console.log(`Fetching ${url}`);
+    const toBeCachedResponse = {json: responseJson, date: Date.now()};
+    localStorage.setItem(url, JSON.stringify(toBeCachedResponse));
+    return responseJson[key];
 }
