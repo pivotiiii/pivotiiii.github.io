@@ -8,11 +8,13 @@ export async function get_api_value(url, key, max_age) {
         }
     }
     return await fetch(url)
-            .then(function(response) {return response.json();})
-            .then(function(response_json) {
-                console.log(`Fetching ${url}`);
-                let too_be_cached_response = {json: response_json, date: Date.now()};
-                localStorage.setItem(url, JSON.stringify(too_be_cached_response));
-                return response_json[key];
-            });
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (response_json) {
+            console.log(`Fetching ${url}`);
+            let too_be_cached_response = {json: response_json, date: Date.now()};
+            localStorage.setItem(url, JSON.stringify(too_be_cached_response));
+            return response_json[key];
+        });
 }

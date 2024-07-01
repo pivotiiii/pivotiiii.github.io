@@ -1,9 +1,12 @@
 const divs = document.querySelectorAll(".replace");
 for (const div of divs) {
     fetch(div.dataset.file)
-        .then(function(file) {return file.text();})
-        .then(function(html) {
-            div.innerHTML = html;});
+        .then(function (file) {
+            return file.text();
+        })
+        .then(function (html) {
+            div.innerHTML = html;
+        });
 
     if (div.dataset.style) {
         div.style.cssText = div.dataset.style;
