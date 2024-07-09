@@ -3,6 +3,7 @@
     border-radius: 50%;
     z-index: -1;
     background: #036a6a;
+    filter: blur(0.15em);
 }
 
 @-webkit-keyframes particle-animation-1 {
