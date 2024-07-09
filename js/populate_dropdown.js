@@ -4,7 +4,7 @@ window.addEventListener("load", function () {
     populate_dropdown();
 });
 
-async function populate_dropdown() {
+function populate_dropdown() {
     if (!document.getElementById("dropdown_list")) {
         console.log("retrying dropdown populate");
         setTimeout(populate_dropdown, 100);

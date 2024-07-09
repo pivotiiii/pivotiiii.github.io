@@ -1,11 +1,15 @@
 const divs = document.querySelectorAll(".replace");
 replaceDivs(divs);
 
-async function replaceDivs(divs) {
+function replaceDivs(divs) {
     for (const div of divs) {
-        const file = await fetch(div.dataset.file);
-        const html = await file.text();
-        div.innerHTML = html;
+        fetch(div.dataset.file)
+            .then(function (file) {
+                return file.text();
+            })
+            .then(function (html) {
+                div.innerHTML = html;
+            });
 
         if (div.dataset.style) {
             div.style.cssText = div.dataset.style;
