@@ -1,0 +1,3 @@
+[submodule "src/routes/simultaneous_equation_cannon_calculator"]
+	path = src/routes/simultaneous_equation_cannon_calculator
+	url = https://github.com/pivotiiii/simultaneous_equation_cannon_calculator
