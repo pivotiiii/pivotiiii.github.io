@@ -1,8 +1,8 @@
 /**
  * Color schemes
  */
-.pink[data-theme="light"],
-.pink:not([data-theme="dark"]) {
+:root[data-theme="light"] .pink,
+:root:not([data-theme="dark"]) .pink {
     --pico-background-color: #fff;
     --pico-color: #373c44;
     --pico-text-selection-color: rgba(246, 84, 126, 0.25);
@@ -112,7 +112,8 @@
     --pico-icon-invalid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(200, 79, 72)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
     color-scheme: light;
 }
-.pink[data-theme="light"]
+[data-theme="light"]
+    .pink
     input:is(
         [type="submit"],
         [type="button"],
@@ -121,7 +122,8 @@
         [type="radio"],
         [type="file"]
     ),
-.pink:not([data-theme="dark"])
+:root:not([data-theme="dark"])
+    .pink
     input:is(
         [type="submit"],
         [type="button"],
@@ -134,7 +136,7 @@
 }
 
 @media only screen and (prefers-color-scheme: dark) {
-    .pink:not([data-theme]) {
+    :root:not([data-theme]) .pink {
         --pico-background-color: #13171f;
         --pico-color: #c2c7d0;
         --pico-text-selection-color: rgba(247, 112, 142, 0.1875);
@@ -246,7 +248,8 @@
         --pico-icon-invalid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(150, 74, 80)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
         color-scheme: dark;
     }
-    .pink:not([data-theme])
+    :root:not([data-theme])
+        .pink
         input:is(
             [type="submit"],
             [type="button"],
@@ -257,10 +260,11 @@
         ) {
         --pico-form-element-focus-color: var(--pico-primary-focus);
     }
-    .pink:not([data-theme]) details summary[role="button"].contrast:not(.outline)::after {
+    :root:not([data-theme]) .pink details summary[role="button"].contrast:not(.outline)::after {
         filter: brightness(0);
     }
-    .pink:not([data-theme])
+    :root:not([data-theme])
+        .pink
         [aria-busy="true"]:not(input, select, textarea).contrast:is(
             button,
             [type="submit"],
@@ -271,7 +275,7 @@
         filter: brightness(0);
     }
 }
-.pink[data-theme="dark"] {
+[data-theme="dark"] .pink {
     --pico-background-color: #13171f;
     --pico-color: #c2c7d0;
     --pico-text-selection-color: rgba(247, 112, 142, 0.1875);
@@ -381,7 +385,8 @@
     --pico-icon-invalid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(150, 74, 80)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
     color-scheme: dark;
 }
-.pink[data-theme="dark"]
+[data-theme="dark"]
+    .pink
     input:is(
         [type="submit"],
         [type="button"],
@@ -392,10 +397,11 @@
     ) {
     --pico-form-element-focus-color: var(--pico-primary-focus);
 }
-.pink[data-theme="dark"] details summary[role="button"].contrast:not(.outline)::after {
+[data-theme="dark"] .pink details summary[role="button"].contrast:not(.outline)::after {
     filter: brightness(0);
 }
-.pink[data-theme="dark"]
+[data-theme="dark"]
+    .pink
     [aria-busy="true"]:not(input, select, textarea).contrast:is(
         button,
         [type="submit"],
@@ -406,9 +412,9 @@
     filter: brightness(0);
 }
 
-progress.pink,
-.pink[type="checkbox"],
-.pink[type="radio"],
-.pink[type="range"] {
+.pink progress,
+.pink [type="checkbox"],
+.pink [type="radio"],
+.pink [type="range"] {
     accent-color: var(--pico-primary);
 }

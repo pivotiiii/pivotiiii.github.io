@@ -1,3 +1,5 @@
+import "./ParticlesComponent.css";
+
 export function ParticlesComponent(props: {color: string}) {
     return (
         <div id="particlesContainer" className={"particlesContainer " + props.color}>
