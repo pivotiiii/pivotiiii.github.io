@@ -10,6 +10,11 @@ export function FooterBarComponent() {
                     <a href="https://picocss.com" className="secondary">
                         Pico CSS
                     </a>
+                    . Icons by{" "}
+                    <a href="https://icons8.com" className="secondary">
+                        Icon8
+                    </a>
+                    .
                 </small>
             </small>
         </div>

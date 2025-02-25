@@ -8,3 +8,26 @@
 .gh-icon:hover > path {
     fill: var(--pico-primary-hover);
 }
+
+.color-mode-icon {
+    cursor: pointer;
+}
+
+.color-mode-icon > * {
+    fill: var(--pico-h4-color);
+    transition: fill var(--pico-transition);
+    -webkit-transition: fill var(--pico-transition);
+    -ms-transition: fill var(--pico-transition);
+}
+
+.color-mode-icon:hover > * {
+    fill: var(--pico-primary);
+}
+
+:root[data-theme="dark"] .dark-mode-icon {
+    display: none;
+}
+
+:root[data-theme="light"] .light-mode-icon {
+    display: none;
+}
