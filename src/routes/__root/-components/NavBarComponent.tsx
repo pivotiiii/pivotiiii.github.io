@@ -1,7 +1,7 @@
 import {Link} from "@tanstack/react-router";
 import * as React from "react";
 import {projects} from "../../../projects";
-import icon from "../-assets/favicon.png";
+import icon from "../-assets/user.png?w=90&format=webp&imagetools";
 import "./NavBarComponent.css";
 
 function LightDarkIconComponent(props: {
