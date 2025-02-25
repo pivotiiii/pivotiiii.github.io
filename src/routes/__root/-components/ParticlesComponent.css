@@ -1,8 +1,8 @@
-#particlesContainer > * {
+.particlesContainer > * {
     background: #036a6a;
 }
 
-.pink#particlesContainer > * {
+.pink.particlesContainer > * {
     background: #f42c6f;
 }
 
