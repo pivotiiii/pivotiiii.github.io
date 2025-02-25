@@ -1,3 +1,15 @@
+.home-link:hover > li > * {
+    text-decoration: underline;
+}
+
+.home-link:hover .user-icon {
+    outline: 2px solid var(--pico-primary) !important;
+}
+
+[data-theme="light"] .user-icon {
+    outline: 1px solid var(--pico-h4-color);
+}
+
 .gh-icon > path {
     fill: var(--pico-h4-color);
     transition: fill var(--pico-transition);

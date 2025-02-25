@@ -161,7 +161,7 @@ export function NavBarComponent(props: {
     return (
         <div style={{minHeight: "5vh"}} className={props.color}>
             <nav>
-                <ul>
+                <ul className="home-link">
                     <li>
                         <Link to="/" className="contrast">
                             <strong>pivotiiii</strong>
@@ -171,7 +171,8 @@ export function NavBarComponent(props: {
                         <Link to="/">
                             <img
                                 src={icon}
-                                alt="profile picture"
+                                className="user-icon"
+                                alt="The Github profile picture of pivotiiii."
                                 width="30"
                                 height="30"
                                 style={{borderRadius: "50%"}}
@@ -184,7 +185,7 @@ export function NavBarComponent(props: {
                         <LightDarkIconComponent setColorMode={props.setColorMode} />
                     </li>
                     <li>
-                        <a href="https://github.com/pivotiiii">
+                        <a href="https://github.com/pivotiiii" title="pivotiiii on Github">
                             <GithubIconComponent />
                         </a>
                     </li>

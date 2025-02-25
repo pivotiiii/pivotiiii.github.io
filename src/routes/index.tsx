@@ -2,16 +2,28 @@ import {Await, createFileRoute, Link} from "@tanstack/react-router";
 import {ProjectProperties, projects} from "../projects";
 import {get_api_value} from "../common";
 
-const metaVars = [
-    {title: "pivotiiii - Projects"},
-    {name: "description", content: "A site that lists projects and mods made by pivotiiii."},
-    {name: "keywords", content: "pivotiiii, programming, mods"},
-];
+const urlRoute = "/";
+const title = "pivotiiii - Projects";
+const description = "All projects and mods made by pivotiiii.";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute(urlRoute)({
     component: ProjectsComponent,
     head: () => ({
-        meta: metaVars,
+        title: title,
+        meta: [
+            {title: title},
+            {name: "description", content: description},
+            {property: "og:title", content: title},
+            // {property: "og:image", content: title},
+            {property: "og:type", content: "website"},
+            {property: "og:url", content: __URL__ + urlRoute},
+            {property: "og:site_name", content: "pivotiiii"},
+            {property: "og:description", content: description},
+            {name: "twitter:card", content: "summary"},
+            {name: "twitter:title", content: title},
+            {name: "twitter:description", content: description},
+            // {name: "twitter:image", content: ""},
+        ],
     }),
     loader: async () => {
         const descriptions = fetchDescriptions();
