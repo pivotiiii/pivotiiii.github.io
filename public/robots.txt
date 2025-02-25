@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pivotiiii.pages.dev/sitemap.xml
