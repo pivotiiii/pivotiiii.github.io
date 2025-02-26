@@ -153,7 +153,7 @@ async function redirectCrawlers(context) {
         !BOT_AGENTS.some((bot) => userAgent.includes(bot)) ||
         (extension.length && IGNORE_EXTENSIONS.includes(extension))
     ) {
-        return fetch(context.request);
+        return await context.next(); //fetch(context.request);
     }
 
     // Build Prerender request
@@ -162,12 +162,10 @@ async function redirectCrawlers(context) {
 
     newHeaders.set("X-Prerender-Token", context.env.PRERENDER_TOKEN);
 
-    return fetch(
-        new Request(newURL, {
-            headers: newHeaders,
-            redirect: "manual",
-        }),
-    );
+    return new Request(newURL, {
+        headers: newHeaders,
+        redirect: "manual",
+    });
 }
 
 export const onRequest = [redirectCrawlers];
