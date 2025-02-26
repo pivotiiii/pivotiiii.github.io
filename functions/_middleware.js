@@ -85,56 +85,6 @@ const IGNORE_EXTENSIONS = [
     ".webmanifest",
 ];
 
-// export default {
-//     /**
-//      * Hooks into the request, and changes origin if needed
-//      */
-//     async fetch(request, env) {
-//         return await handleRequest(request, env).catch(
-//             (err) => new Response(err.stack, {status: 500}),
-//         );
-//     },
-// };
-
-// /**
-//  * @param {Request} request
-//  * @param {any} env
-//  * @returns {Promise<Response>}
-//  */
-// async function handleRequest(request, env) {
-//     const url = new URL(request.url);
-//     const userAgent = request.headers.get("User-Agent")?.toLowerCase() || "";
-//     const isPrerender = request.headers.get("X-Prerender");
-//     const pathName = url.pathname.toLowerCase();
-//     const extension = pathName
-//         .substring(pathName.lastIndexOf(".") || pathName.length)
-//         ?.toLowerCase();
-
-//     // Prerender loop protection
-//     // Non robot user agent
-//     // Ignore extensions
-//     if (
-//         isPrerender ||
-//         !BOT_AGENTS.some((bot) => userAgent.includes(bot)) ||
-//         (extension.length && IGNORE_EXTENSIONS.includes(extension))
-//     ) {
-//         return fetch(request);
-//     }
-
-//     // Build Prerender request
-//     const newURL = `https://service.prerender.io/${request.url}`;
-//     const newHeaders = new Headers(request.headers);
-
-//     newHeaders.set("X-Prerender-Token", env.PRERENDER_TOKEN);
-
-//     return fetch(
-//         new Request(newURL, {
-//             headers: newHeaders,
-//             redirect: "manual",
-//         }),
-//     );
-// }
-
 async function redirectCrawlers(context) {
     const url = new URL(context.request.url);
     const userAgent = context.request.headers.get("User-Agent")?.toLowerCase() || "";
@@ -153,8 +103,7 @@ async function redirectCrawlers(context) {
         !BOT_AGENTS.some((bot) => userAgent.includes(bot)) ||
         (extension.length && IGNORE_EXTENSIONS.includes(extension))
     ) {
-        console.log("regular request: " + userAgent);
-        return await context.next(); //fetch(context.request);
+        return await context.next();
     }
 
     // Build Prerender request
@@ -162,7 +111,6 @@ async function redirectCrawlers(context) {
     const newHeaders = new Headers(context.request.headers);
 
     newHeaders.set("X-Prerender-Token", context.env.PRERENDER_TOKEN);
-    console.log("request with bot id: " + userAgent + " | url: " + newURL);
     return fetch(
         new Request(newURL, {
             headers: newHeaders,
