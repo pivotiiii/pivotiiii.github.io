@@ -157,7 +157,7 @@ async function redirectCrawlers(context) {
     }
 
     // Build Prerender request
-    const newURL = `https://service.prerender.io/${request.url}`;
+    const newURL = `https://service.prerender.io/${context.request.url}`;
     const newHeaders = new Headers(context.request.headers);
 
     newHeaders.set("X-Prerender-Token", context.env.PRERENDER_TOKEN);
