@@ -153,6 +153,7 @@ async function redirectCrawlers(context) {
         !BOT_AGENTS.some((bot) => userAgent.includes(bot)) ||
         (extension.length && IGNORE_EXTENSIONS.includes(extension))
     ) {
+        console.log("regular request: " + {userAgent});
         return await context.next(); //fetch(context.request);
     }
 
@@ -161,10 +162,11 @@ async function redirectCrawlers(context) {
     const newHeaders = new Headers(context.request.headers);
 
     newHeaders.set("X-Prerender-Token", context.env.PRERENDER_TOKEN);
-
+    console.log("request with bot id: " + userAgent + " | url: " + newURL);
     return new Request(newURL, {
         headers: newHeaders,
         redirect: "manual",
+        status: 200,
     });
 }
 
