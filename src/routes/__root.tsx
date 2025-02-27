@@ -40,7 +40,7 @@ function RootComponent() {
     return (
         <div style={{minHeight: "95vh"}} className={currentColor}>
             <HeadContent />
-            <NavBarComponent color={currentColor} setTheme={setTheme} />
+            <NavBarComponent color={currentColor} theme={theme} setTheme={setTheme} />
             <ParticlesComponent color={currentColor} />
             <Outlet />
             <FooterBarComponent />
