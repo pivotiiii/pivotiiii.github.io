@@ -18,6 +18,9 @@ export async function get_api_value(url: string, key: string, max_age: number) {
 }
 
 export function useWindowDimensions() {
+    if (typeof window !== "object") {
+        return;
+    }
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
 
@@ -33,4 +36,18 @@ export function useWindowDimensions() {
     }, []);
 
     return {width: width, height: height};
+}
+
+export function useMatchMedia(query: string) {
+    if (typeof window !== "object" || !window.matchMedia) {
+        return;
+    }
+    const [match, setMatch] = useState(window.matchMedia(query).matches);
+    useEffect(() => {
+        const listener = (e: MediaQueryListEvent) => setMatch(e.matches);
+        const mql = window.matchMedia(query);
+        mql.addEventListener("change", listener);
+        return () => mql.removeEventListener("change", listener);
+    }, []);
+    return match;
 }
