@@ -23,9 +23,9 @@ function RootComponent() {
     const currentLocation = useLocation();
     const currentColor: string = routeColors[currentLocation.pathname] || "cyan";
 
-    const defaultTheme = (localStorage.getItem("theme") as "light" | "dark" | "system") || "system";
+    const defaultTheme = (localStorage.getItem("theme") as Theme) || "system";
     const systemThemeIsDark = useMatchMedia("(prefers-color-scheme: dark)");
-    const [theme, setTheme] = React.useState<"light" | "dark" | "system">(defaultTheme);
+    const [theme, setTheme] = React.useState<Theme>(defaultTheme);
 
     React.useEffect(() => {
         let themeToUse = theme;

@@ -1,5 +1,5 @@
 import {Await, createFileRoute, Link} from "@tanstack/react-router";
-import {ProjectProperties, projects} from "../projects";
+import {projects} from "../projects";
 import {get_api_value} from "../common";
 
 const urlRoute = "/";

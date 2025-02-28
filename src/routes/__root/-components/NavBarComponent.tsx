@@ -3,6 +3,11 @@ import * as React from "react";
 import {projects} from "../../../projects";
 import icon from "../-assets/user.png?w=90&format=webp&imagetools";
 import "./NavBarComponent.css";
+
+declare global {
+    type Theme = "dark" | "light" | "system";
+}
+
 const lightIcon = (
     <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -43,8 +48,8 @@ const systemIcon = (
 );
 
 interface ThemeDropdownComponentProps {
-    theme: "light" | "dark" | "system";
-    setTheme: React.Dispatch<React.SetStateAction<"light" | "dark" | "system">>;
+    theme: Theme;
+    setTheme: React.Dispatch<React.SetStateAction<Theme>>;
 }
 
 function ThemeDropdownComponent(props: ThemeDropdownComponentProps) {
@@ -53,7 +58,7 @@ function ThemeDropdownComponent(props: ThemeDropdownComponentProps) {
     const handleToggle = (event: {currentTarget: {open: boolean}}) => {
         setIsOpen(event.currentTarget.open);
     };
-    const handleSelect = (theme: "light" | "dark" | "system") => {
+    const handleSelect = (theme: Theme) => {
         setIsOpen(false);
         props.setTheme(theme);
     };
@@ -99,9 +104,7 @@ function ThemeDropdownComponent(props: ThemeDropdownComponentProps) {
     );
 }
 
-function LightDarkIconComponent(props: {
-    setTheme: React.Dispatch<React.SetStateAction<"light" | "dark" | "system">>;
-}) {
+function LightDarkIconComponent(props: {setTheme: React.Dispatch<React.SetStateAction<Theme>>}) {
     const toggleTheme = () => {
         props.setTheme((prev) => {
             const newTheme = prev === "dark" ? "light" : "dark";
@@ -206,8 +209,8 @@ function ProjectsDropdownComponent() {
 
 interface NavBarComponentProps {
     color: string;
-    theme: "light" | "dark" | "system";
-    setTheme: React.Dispatch<React.SetStateAction<"light" | "dark" | "system">>;
+    theme: Theme;
+    setTheme: React.Dispatch<React.SetStateAction<Theme>>;
 }
 
 export function NavBarComponent(props: NavBarComponentProps) {

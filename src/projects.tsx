@@ -1,10 +1,12 @@
-export interface ProjectProperties {
-    name: string;
-    shortname: string;
-    link: string;
-    description: string;
-    desc_external: boolean;
-    desc_external_key: string;
+declare global {
+    interface ProjectProperties {
+        name: string;
+        shortname: string;
+        link: string;
+        description: string;
+        desc_external: boolean;
+        desc_external_key: string;
+    }
 }
 
 export const projects = new Array<ProjectProperties>(
@@ -12,8 +14,7 @@ export const projects = new Array<ProjectProperties>(
         name: "Simultaneous Equation Cannons - Calculator",
         shortname: "SEC Calculator",
         link: "/simultaneous_equation_cannon_calculator",
-        description:
-            "https://api.github.com/repos/pivotiiii/simultaneous_equation_cannon_calculator",
+        description: "https://api.github.com/repos/pivotiiii/simultaneous_equation_cannon_calculator",
         desc_external: true,
         desc_external_key: "description",
     },
