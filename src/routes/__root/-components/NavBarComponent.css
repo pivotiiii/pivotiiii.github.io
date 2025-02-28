@@ -21,10 +21,6 @@
     fill: var(--pico-primary-hover);
 }
 
-.color-mode-icon {
-    cursor: pointer;
-}
-
 .color-mode-icon > * {
     fill: var(--pico-h4-color);
     transition: fill var(--pico-transition);
@@ -56,8 +52,16 @@
     box-shadow: unset !important;
     background-color: unset !important;
     padding-right: 0px !important;
+    margin-top: -4px;
     border: unset !important;
     /* margin-right: -4px; */ /* uncomment if using arrow*/
+}
+
+/* safari ios */
+@supports (-webkit-touch-callout: none) {
+    .dropdown.theme-dropdown summary {
+        margin-top: -52px;
+    }
 }
 
 .dropdown.theme-dropdown a {
@@ -66,4 +70,8 @@
 
 li:hover > a > .color-mode-icon > * {
     fill: var(--pico-primary);
+}
+
+.cursor-pointer {
+    cursor: pointer;
 }

@@ -73,8 +73,7 @@ function ThemeDropdownComponent(props: ThemeDropdownComponentProps) {
                 <li>
                     <a
                         onClick={() => handleSelect("light")}
-                        href="#"
-                        className="always-display"
+                        className="always-display cursor-pointer"
                         aria-current={props.theme === "light"}
                     >
                         {lightIcon} Light
@@ -83,8 +82,7 @@ function ThemeDropdownComponent(props: ThemeDropdownComponentProps) {
                 <li>
                     <a
                         onClick={() => handleSelect("dark")}
-                        href="#"
-                        className="always-display"
+                        className="always-display cursor-pointer"
                         aria-current={props.theme === "dark"}
                     >
                         {darkIcon} Dark
@@ -93,7 +91,7 @@ function ThemeDropdownComponent(props: ThemeDropdownComponentProps) {
                 <li>
                     <a
                         onClick={() => handleSelect("system")}
-                        href="#"
+                        className="cursor-pointer"
                         aria-current={props.theme === "system"}
                     >
                         {systemIcon} Device
