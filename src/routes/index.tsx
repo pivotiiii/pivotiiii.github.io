@@ -1,6 +1,7 @@
 import {Await, createFileRoute, Link} from "@tanstack/react-router";
 import {projects} from "../projects";
 import {get_api_value} from "../common";
+import og_image from "./__root/-assets/og_image_main.png?format=webp&imagetools";
 
 const urlRoute = "/";
 const title = "pivotiiii - Projects";
@@ -14,15 +15,15 @@ export const Route = createFileRoute(urlRoute)({
             {title: title},
             {name: "description", content: description},
             {property: "og:title", content: title},
-            // {property: "og:image", content: title},
+            {property: "og:image", content: og_image},
             {property: "og:type", content: "website"},
             {property: "og:url", content: __URL__ + urlRoute},
             {property: "og:site_name", content: "pivotiiii"},
             {property: "og:description", content: description},
-            {name: "twitter:card", content: "summary"},
+            {name: "twitter:card", content: "summary_large_image"},
             {name: "twitter:title", content: title},
             {name: "twitter:description", content: description},
-            // {name: "twitter:image", content: ""},
+            {name: "twitter:image", content: og_image},
         ],
     }),
     loader: async () => {
