@@ -1,5 +1,5 @@
 import {Link} from "@tanstack/react-router";
-import * as React from "react";
+import {useState} from "react";
 import {projects} from "../../../projects";
 import icon from "../-assets/user.png?w=90&format=webp&imagetools";
 import "./NavBarComponent.css";
@@ -53,7 +53,7 @@ interface ThemeDropdownComponentProps {
 }
 
 function ThemeDropdownComponent(props: ThemeDropdownComponentProps) {
-    const [isOpen, setIsOpen] = React.useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleToggle = (event: {currentTarget: {open: boolean}}) => {
         setIsOpen(event.currentTarget.open);
@@ -176,7 +176,7 @@ function ProjectsDropdownElementComponent(props: ProjectsDropdownElementComponen
 }
 
 function ProjectsDropdownComponent() {
-    const [isOpen, setIsOpen] = React.useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleToggle = (event: {currentTarget: {open: boolean}}) => {
         setIsOpen(event.currentTarget.open);

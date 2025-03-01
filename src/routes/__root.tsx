@@ -3,7 +3,7 @@ import {NavBarComponent} from "./__root/-components/NavBarComponent";
 import {FooterBarComponent} from "./__root/-components/FooterBarComponent";
 import {ParticlesComponent} from "./__root/-components/ParticlesComponent";
 import {NotFoundComponent} from "./__root/-components/NotFoundComponent";
-import * as React from "react";
+import {useState, useEffect} from "react";
 import {useMatchMedia} from "../common";
 
 export const Route = createRootRoute({
@@ -25,9 +25,9 @@ function RootComponent() {
 
     const defaultTheme = (localStorage.getItem("theme") as Theme) || "system";
     const systemThemeIsDark = useMatchMedia("(prefers-color-scheme: dark)");
-    const [theme, setTheme] = React.useState<Theme>(defaultTheme);
+    const [theme, setTheme] = useState<Theme>(defaultTheme);
 
-    React.useEffect(() => {
+    useEffect(() => {
         let themeToUse = theme;
         localStorage.setItem("theme", themeToUse);
         if (themeToUse === "system") {

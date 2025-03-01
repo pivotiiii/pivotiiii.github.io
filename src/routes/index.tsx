@@ -26,8 +26,8 @@ export const Route = createFileRoute(urlRoute)({
         ],
     }),
     loader: async () => {
-        const descriptions = fetchDescriptions();
-        return {loaderDescriptions: descriptions};
+        const descriptionObjects = fetchDescriptions();
+        return descriptionObjects;
     },
     staleTime: Infinity,
     preloadStaleTime: Infinity,
@@ -35,17 +35,15 @@ export const Route = createFileRoute(urlRoute)({
 });
 
 function fetchDescriptions() {
-    const descObjs = Promise.allSettled(
-        projects.map(async (project) => {
-            const description = await get_api_value(
-                project.description,
-                project.desc_external_key,
-                30 * 60 * 1000,
-            );
-            return {link: project.link, description: description};
-        }),
-    );
-    return {descObjs: descObjs};
+    const descObjs = projects.map((project) => {
+        const description = get_api_value(
+            project.description,
+            project.desc_external_key,
+            24 * 60 * 60 * 1000,
+        );
+        return {link: project.link, description: description};
+    });
+    return descObjs;
 }
 
 const externalIconCards = (
@@ -66,7 +64,7 @@ const externalIconCards = (
     </svg>
 );
 
-function CardButtonComponent(props: {url: string}) {
+function ProjectCardButtonComponent(props: {url: string}) {
     if (props.url != null) {
         const matches = props.url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
         if (matches != null && matches.length > 1) {
@@ -87,30 +85,28 @@ function CardButtonComponent(props: {url: string}) {
     );
 }
 
-function DescriptionComponent(props: ProjectProperties) {
-    const {loaderDescriptions} = Route.useLoaderData();
-    return (
-        <Await
-            // prettier-ignore
-            promise={loaderDescriptions.descObjs as Promise<PromiseFulfilledResult<{link: string; description: any;}>[]>}
-            fallback={<p style={{height: "3em"}} aria-busy={true}></p>}
-        >
-            {(fetchedData) => {
-                const a = fetchedData.find(
-                    (data) => data.status === "fulfilled" && data.value.link === props.link,
-                )?.value.description;
-                return <p>{a}</p>;
-            }}
-        </Await>
-    );
+function ProjectDescriptionComponent(props: ProjectProperties) {
+    const descriptionPromise = Route.useLoaderData({
+        select: (data) => data.find((descObj) => descObj["link"] === props.link),
+    })?.description;
+    if (descriptionPromise) {
+        return (
+            <Await promise={descriptionPromise} fallback={<p style={{height: "3em"}} aria-busy={true}></p>}>
+                {(fetchedDescription) => {
+                    return <p>{fetchedDescription}</p>;
+                }}
+            </Await>
+        );
+    }
+    return <p></p>;
 }
 
-function CardComponent(props: ProjectProperties) {
+function ProjectCardComponent(props: ProjectProperties) {
     return (
         <article>
             <h4>{props.name}</h4>
-            <DescriptionComponent {...props} />
-            <CardButtonComponent url={props.link} />
+            <ProjectDescriptionComponent {...props} />
+            <ProjectCardButtonComponent url={props.link} />
         </article>
     );
 }
@@ -121,7 +117,7 @@ function ProjectsComponent() {
             <div>
                 <h1>Projects</h1>
                 {projects.map((project) => (
-                    <CardComponent key={project.name} {...project} />
+                    <ProjectCardComponent key={project.name} {...project} />
                 ))}
             </div>
         </>

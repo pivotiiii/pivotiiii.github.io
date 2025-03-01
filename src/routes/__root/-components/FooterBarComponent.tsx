@@ -1,5 +1,3 @@
-import * as React from "react";
-
 export function FooterBarComponent() {
     return (
         <div style={{position: "sticky", top: "100vh"}}>
