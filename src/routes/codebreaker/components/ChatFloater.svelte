@@ -85,8 +85,8 @@
     position: absolute;
     background-color: tomato;
     border-radius: 50%;
-    width: 35px;
-    height: 35px;
+    width: 55px;
+    height: 55px;
     top: 0%;
     right: 0%;
     z-index: 12;

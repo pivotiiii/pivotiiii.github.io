@@ -1,5 +1,5 @@
 <!-- TODO: Game Over screen
-Errors on full room, player name taken etc. -->
+player change sound only happens if control is gained rn, not lost-->
 
 <script lang="ts">
   import Chat from "./Chat.svelte";
@@ -9,6 +9,9 @@ Errors on full room, player name taken etc. -->
   import RoomSettings from "./RoomSettings.svelte";
   import {Role, GameStatus, type GameState, FeedbackType} from "./types";
   import chatSound from "../assets/chat.mp3";
+  import playerChangeSound from "../assets/playerChange.wav";
+  import winSound from "../assets/win.wav";
+  import lossSound from "../assets/loss.wav";
   import ChatFloater from "./ChatFloater.svelte";
 
   const NUM_COLORS_MIN = 2;
@@ -43,9 +46,18 @@ Errors on full room, player name taken etc. -->
   let newChatMessage: boolean = $state(false);
   let chatDialogOpen: boolean = $state(false);
   let firstStateUpdateReceived: boolean = $state(false);
+  let winner = $state("");
+  let showError = $state(false);
 
   async function connectWebSocket() {
-    ws = new WebSocket(`wss://mastermind-worker.pivotiiii.workers.dev/room/${roomName}?player=${playerName}`);
+    ws = new WebSocket(`${__WORKER_URL__}/room/${roomName}?player=${playerName}`);
+    ws.onclose = () => {
+      ws = null;
+      showError = true;
+      setTimeout(() => {
+        showError = false;
+      }, 3000);
+    };
     ws.onmessage = (event) => {
       const msg = JSON.parse(event.data);
       console.log("message: ", event.data);
@@ -54,7 +66,7 @@ Errors on full room, player name taken etc. -->
       } else if (msg.type === "error") {
         console.log("error: ", msg.data);
       } else if (msg.type === "gameOver") {
-        handleChatMessage("System", msg.winner + " won!");
+        handleGameOver(msg.winner);
       } else if (msg.type === "chatMessage") {
         handleChatMessage(msg.sender, msg.message);
       } else if (msg.type === "playerConnected") {
@@ -71,6 +83,15 @@ Errors on full room, player name taken etc. -->
   }
 
   function handleStateUpdate(newState: any) {
+    if (
+      newState.activePlayer &&
+      newState.activePlayer !== gameState.activePlayer &&
+      gameState.status === GameStatus.Playing
+    ) {
+      const audio = new Audio(playerChangeSound);
+      audio.volume = 0.8;
+      audio.play();
+    }
     gameState = {...gameState, ...newState};
     firstStateUpdateReceived = true;
   }
@@ -82,6 +103,20 @@ Errors on full room, player name taken etc. -->
     }
     const audio = new Audio(chatSound);
     audio.play();
+  }
+
+  function handleGameOver(winner: string) {
+    winner = winner;
+    handleChatMessage("System", winner + " won!");
+    if (winner === playerName) {
+      const audio = new Audio(winSound);
+      audio.volume = 0.5;
+      audio.play();
+    } else {
+      const audio = new Audio(lossSound);
+      audio.volume = 0.5;
+      audio.play();
+    }
   }
 
   function startGame() {
@@ -196,14 +231,14 @@ Errors on full room, player name taken etc. -->
     {:else}
       <button
         class="func-button"
-        disabled={gameState.activePlayer !== gameState.codeMaker}
+        disabled={gameState.activePlayer !== gameState.codeMaker || gameState.secret.includes(0)}
         onclick={submitSecret}>Set Secret</button
       >
     {/if}
   {:else}
     <button
       class="func-button"
-      disabled={gameState.activePlayer !== gameState.codeBreaker}
+      disabled={gameState.activePlayer !== gameState.codeBreaker || gameState.currentGuess.includes(0)}
       onclick={submitGuess}>Guess</button
     >
   {/if}
@@ -247,18 +282,26 @@ Errors on full room, player name taken etc. -->
           <button
             class="resign-button func-button secondary"
             style="padding: 0px 0px 0px 0px; margin: 15px 0px 0px 10px; min-width: 45px;"
-            onclick={resignGame}>{@render flagIcon()}</button
+            onclick={resignGame}
+            disabled={gameState.status !== GameStatus.Playing}
+          >
+            {@render flagIcon()}</button
           >
         </div>
       </div>
+      {#if gameState.status === GameStatus.GameOver && winner !== ""}
+        <div style="width: 100%; text-align: center; margin-top: 20px;">
+          <h2>{winner} wins!</h2>
+        </div>
+      {/if}
       <Game {playerName} bind:gameState {updateGuess} {updateFeedback} />
     {/if}
   </article>
 
   {#if ws && firstStateUpdateReceived}
-    <article class="controls_container">
+    <article class="controls_container desktop-only">
       {#if gameState.status === GameStatus.Playing || gameState.status === GameStatus.GameOver}
-        <div class="desktop-only">
+        <div class="desktop-controls">
           <Players
             codeBreakerName={gameState.codeBreaker}
             codeMakerName={gameState.codeMaker}
@@ -267,33 +310,61 @@ Errors on full room, player name taken etc. -->
             codeMakerOnline={gameState.connectedPlayers.includes(gameState.codeMaker || "")}
           />
 
-          {@render functionButton()}
+          <div class="desktop-controls-buttons">
+            {@render functionButton()}
+            <button
+              class="resign-button func-button secondary"
+              style="padding: 0px 0px 0px 0px; margin: 15px 0px 15px 10px; min-width: 45px;"
+              onclick={resignGame}
+              disabled={gameState.status !== GameStatus.Playing}
+            >
+              {@render flagIcon()}
+            </button>
+          </div>
         </div>
       {/if}
 
-      <div style="height: 100%; display: flex; flex-direction: column; justify-content: end;">
+      <div class="desktop-chat-connected">
         {#if gameState.status === GameStatus.Lobby}
-          <div style="display: flex; flex-direction: row; justify-content: left; align-items: start;">
-            Connected:&nbsp;
+          <div class="desktop-connected connected-font">
+            <span>Connected:&nbsp;</span>
             {#each gameState.connectedPlayers as player, index}
               <span>{player + (index < gameState.connectedPlayers.length - 1 ? ", " : "")}&nbsp;</span>
             {/each}
           </div>
         {/if}
 
-        <div class="desktop-only" style="height: 100%; margin-top: 15px;">
-          <div style="height: 100%;">
-            <Chat messages={chatMessages} onSend={sendChatMessage} />
-          </div>
+        <div class="desktop-chat">
+          <Chat messages={chatMessages} onSend={sendChatMessage} />
         </div>
       </div>
     </article>
+
+    {#if gameState.status === GameStatus.Lobby}
+      <article class="mobile-only" style="width: 100%;">
+        <div style="height: 100%; display: flex; flex-direction: column; justify-content: end; width: 100%;">
+          <div
+            class="connected-font"
+            style="display: flex; flex-direction: row; justify-content: left; align-items: start;"
+          >
+            <span>Connected:&nbsp;</span>
+            {#each gameState.connectedPlayers as player, index}
+              <span>{player + (index < gameState.connectedPlayers.length - 1 ? ", " : "")}&nbsp;</span>
+            {/each}
+          </div>
+        </div>
+      </article>
+    {/if}
 
     <div class="mobile-only">
       <ChatFloater {chatMessages} {sendChatMessage} bind:chatDialogOpen bind:newChatMessage />
     </div>
   {/if}
 </div>
+
+{#if showError}
+  <div class="error-message">Room is full or player name already exists in the room.</div>
+{/if}
 
 <style>
   .main_container {
@@ -308,7 +379,8 @@ Errors on full room, player name taken etc. -->
   .func-button {
     margin-top: 15px;
     margin-bottom: 15px;
-    min-width: 200px;
+    min-width: 150px;
+    width: 100%;
   }
 
   .room_container {
@@ -324,10 +396,44 @@ Errors on full room, player name taken etc. -->
     flex-direction: column;
     justify-content: start;
     min-width: 235px;
+    min-height: 0;
+    overflow: hidden;
   }
 
-  .desktop-only {
-    display: initial;
+  .desktop-chat-connected {
+    flex: 1 1 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    overflow: hidden;
+  }
+
+  .desktop-connected {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: start;
+  }
+
+  .desktop-chat {
+    min-height: 0;
+    height: 0;
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    overflow: hidden;
+  }
+
+  .desktop-controls-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+  }
+
+  .connected-font {
+    font-size: 0.8em;
   }
 
   .mobile-only {
@@ -351,6 +457,7 @@ Errors on full room, player name taken etc. -->
     }
 
     .func-button {
+      margin-top: 15px;
       margin-bottom: 0px;
     }
 
@@ -367,7 +474,6 @@ Errors on full room, player name taken etc. -->
       display: flex;
       /* align-items: center; */
       flex-direction: row;
-      justify-content: space-between;
     }
 
     .mobile-controls-buttons {
@@ -376,7 +482,12 @@ Errors on full room, player name taken etc. -->
       margin-top: -15px;
       /* align-items: center; */
       justify-content: end;
-      max-height: 70px;
+      max-height: 65px;
+      width: 100%;
+    }
+
+    .mobile-controls-buttons > :nth-child(2) {
+      flex: 0;
     }
   }
 </style>

@@ -123,8 +123,7 @@
   }
 
   .menu-item.trash-icon {
-    border: unset;
-    background-color: transparent;
+    background-color: var(--pico-form-element-selected-background-color);
   }
 
   .menu-item:hover {
@@ -136,15 +135,15 @@
   }
 
   .c1 {
-    background-color: white;
+    background-color: aqua;
   }
 
   .c2 {
-    background-color: yellow;
+    background-color: mediumseagreen;
   }
 
   .c3 {
-    background-color: orange;
+    background-color: yellow;
   }
 
   .c4 {
@@ -160,10 +159,26 @@
   }
 
   .c7 {
-    background-color: aqua;
+    background-color: blue;
   }
 
   .c8 {
-    background-color: mediumseagreen;
+    background-color: rgb(238, 155, 0);
+  }
+
+  .c9 {
+    background-color: rgb(0, 255, 13);
+  }
+
+  .c10 {
+    background-color: rgb(137, 132, 192);
+  }
+
+  .c11 {
+    background-color: white;
+  }
+
+  .c12 {
+    background-color: rgb(0, 0, 0);
   }
 </style>

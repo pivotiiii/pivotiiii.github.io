@@ -23,6 +23,7 @@ declare global {
     export default outputs;
   }
   declare const __URL__: string;
+  declare const __WORKER_URL__: string;
 }
 
 export {};

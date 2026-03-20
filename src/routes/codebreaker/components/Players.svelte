@@ -39,10 +39,10 @@
 <style>
   .container {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     column-gap: 20px;
     justify-content: left;
-    align-items: start;
   }
 
   .active {
@@ -64,6 +64,7 @@
   .player-container > :first-child {
     font-size: 0.7em;
     margin-bottom: 0px;
+    min-width: 70px;
   }
 
   .dot {
