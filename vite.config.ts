@@ -7,7 +7,7 @@ export default defineConfig(({command}) => ({
   define: {
     __URL__: JSON.stringify(command === "serve" ? "http://localhost:5173" : "https://pivotiiii.pages.dev"),
     __WORKER_URL__: JSON.stringify(
-      command === "serve" ? "ws://localhost:8787" : "ws://mastermind-worker.pivotiiii.workers.dev"
+      command === "serve" ? "ws://localhost:8787" : "wss://mastermind-worker.pivotiiii.workers.dev"
     )
   },
   plugins: [
