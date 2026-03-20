@@ -1,0 +1,18 @@
+button.link-button {
+  all: unset;
+  cursor: pointer;
+  color: var(--pico-primary);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: text-decoration-color var(--pico-transition);
+}
+
+button.link-button.underlined {
+  transition: color var(--pico-transition);
+  text-decoration: underline;
+}
+
+button.link-button:hover {
+  color: var(--pico-primary-hover);
+  text-decoration-color: var(--pico-primary);
+}

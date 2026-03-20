@@ -1,18 +1,33 @@
-import {defineConfig} from "vite";
-import react from "@vitejs/plugin-react";
-import {TanStackRouterVite} from "@tanstack/router-plugin/vite";
+import {sveltekit} from "@sveltejs/kit/vite";
 import {imagetools} from "vite-imagetools";
+import {defineConfig} from "vite";
+import {ViteMinifyPlugin} from "vite-plugin-minify";
 
-const ReactCompilerConfig = {
-    target: "19",
-};
-
-// https://vitejs.dev/config/
 export default defineConfig({
-    define: {__URL__: JSON.stringify("https://pivotiiii.pages.dev")},
-    plugins: [
-        imagetools(),
-        TanStackRouterVite({autoCodeSplitting: true}),
-        react({babel: {plugins: [["babel-plugin-react-compiler", ReactCompilerConfig]]}}),
-    ],
+  define: {__URL__: JSON.stringify("https://pivotiiii.pages.dev")},
+  plugins: [
+    imagetools(),
+    sveltekit(),
+    ViteMinifyPlugin({
+      collapseWhitespace: true,
+      collapseInlineTagWhitespace: true,
+      removeComments: false, // Svelte hydration markers müssen erhalten bleiben
+      removeRedundantAttributes: true,
+      removeScriptTypeAttributes: true,
+      removeStyleLinkTypeAttributes: true,
+      useShortDoctype: true,
+      minifyCSS: true,
+      minifyJS: true,
+      decodeEntities: true
+    })
+  ],
+  build: {
+    minify: "terser",
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        passes: 2
+      }
+    }
+  }
 });
